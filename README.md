@@ -1,6 +1,11 @@
-# 阿噜的个人网站项目
-http://www.wranklehia.cn
-本仓库仅上传了前端部分，后台面板以及后端服务出于安全性的考量并没有上传到本仓库
-本项目当前仍处于开发进程中
-其实我还上传了我的自设3D模型，不过是经过了减面+降贴图分辨率，以及截掉下半身模型处理的
-（You know, the website’s performance could be terrible if I didn’t do that:P)
+# 阿噜的个人网站
+
+[www.wranklehia.cn](http://www.wranklehia.cn)
+
+本仓库仅包含网站的前端部分。出于安全考虑，后台管理面板及后端服务未上传至本仓库。
+
+本项目目前仍在开发中，部分功能和页面可能会持续调整。
+
+网站中还展示了我的自设 3D 模型。为了优化网页性能，模型经过了减面、降低贴图分辨率以及截去下半身等处理。
+
+> You know, the website's performance could have been terrible if I hadn't done that :P
