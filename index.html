@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="color-scheme" content="dark">
+  <style>
+    html, body { margin: 0; min-height: 100%; background: #070a12; color-scheme: dark; scrollbar-gutter: stable; }
+    body { background: #070a12 linear-gradient(145deg, #0a101d 0%, #090b13 45%, #11101b 100%) fixed / 100vw 100vh no-repeat; }
+    .left { min-height: max(100svh, 1210px); }
+    .progress-bar {
+      width: 100% !important;
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform, opacity;
+      contain: strict;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.wranklehia.cn:6343/resources/css/style-mainpage.css">
+  <style>
+    @font-face {
+      font-family: "Original Latin";
+      src: local("PingFang SC"), local("Microsoft YaHei");
+      unicode-range: U+0000-024F;
+      font-display: swap;
+    }
+    .hero-intro h1,
+    .section-title p,
+    .collections-header h2,
+    .collections-grid .collection-item h2,
+    .modal-page-header h1,
+    .modal-page-header h2,
+    .article-body h1,
+    .article-body h2,
+    .article-body h3 {
+      font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+    }
+    .section-title small,
+    .profile-name,
+    .clock-time {
+      font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+    }
+    .upper-bar,
+    .right .notice-board {
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(29, 39, 64, .58), rgba(8, 12, 22, .48) 58%, rgba(21, 17, 43, .52));
+      border-color: rgba(210, 225, 255, .14);
+      box-shadow:
+        0 22px 60px rgba(0, 0, 0, .28),
+        inset 0 1px 0 rgba(255, 255, 255, .11),
+        inset 0 -1px 0 rgba(255, 255, 255, .025);
+      backdrop-filter: blur(28px) saturate(1.18) contrast(1.04);
+      -webkit-backdrop-filter: blur(28px) saturate(1.18) contrast(1.04);
+    }
+    .upper-bar {
+      z-index: 4;
+      overflow: visible;
+      isolation: auto;
+      background: rgba(8, 12, 22, .16);
+      border-color: transparent;
+      box-shadow: none;
+      backdrop-filter: blur(28px) saturate(1.18) contrast(1.04);
+      -webkit-backdrop-filter: blur(28px) saturate(1.18) contrast(1.04);
+    }
+    .upper-bar-tilt {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border: 1px solid rgba(210, 225, 255, .14);
+      border-radius: inherit;
+      overflow: hidden;
+      clip-path: inset(0 round 999px);
+      isolation: isolate;
+      box-shadow:
+        0 22px 60px rgba(0, 0, 0, .28),
+        inset 0 1px 0 rgba(255, 255, 255, .11),
+        inset 0 -1px 0 rgba(255, 255, 255, .025);
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .upper-bar-tilt > .js-tilt-glare {
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: inherit !important;
+      overflow: hidden !important;
+      clip-path: inset(0 round 999px);
+    }
+    .upper-bar-tilt::before,
+    .right .notice-board::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+    .upper-bar-tilt::before {
+      background:
+        radial-gradient(80% 90% at 12% 0%, rgba(132, 174, 255, .12), transparent 62%),
+        linear-gradient(110deg, rgba(255,255,255,.055), transparent 32% 72%, rgba(142,115,255,.045)),
+        linear-gradient(135deg, rgba(29, 39, 64, .58), rgba(8, 12, 22, .48) 58%, rgba(21, 17, 43, .52));
+    }
+    .right .notice-board::before {
+      background:
+        radial-gradient(80% 90% at 12% 0%, rgba(132, 174, 255, .12), transparent 62%),
+        linear-gradient(110deg, rgba(255,255,255,.055), transparent 32% 72%, rgba(142,115,255,.045));
+    }
+    .upper-bar-contents {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: visible;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      transform: none;
+      will-change: auto;
+      z-index: 1;
+    }
+    .upper-bar::before {
+      content: none;
+    }
+    .upper-bar::after {
+      content: none;
+    }
+    .upper-bar-tilt::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(105deg, transparent 28%, rgba(255,255,255,.12) 46%, rgba(180,218,255,.06) 54%, transparent 72%);
+      transform: translateX(-115%);
+      opacity: 0;
+    }
+    .upper-bar.nav-returning .upper-bar-tilt::after {
+      animation: nav-soft-sheen .9s cubic-bezier(.22,1,.36,1) .12s both;
+    }
+    .right .notice-board {
+      background:
+        linear-gradient(145deg, rgba(18, 23, 39, .55), rgba(8, 11, 20, .5) 64%, rgba(24, 17, 47, .48));
+    }
+    .left-text-motion {
+      opacity: var(--left-text-opacity, 0);
+      filter: none;
+      transition: opacity .14s ease-out;
+      will-change: auto;
+    }
+    .article-link.left-text-motion {
+      transition: color .25s ease, text-shadow .28s ease, transform .28s ease,
+                  background-color .28s ease, opacity .14s ease-out !important;
+      transition-delay: 0ms, 0ms, 0ms, 0ms, 0ms !important;
+    }
+    .article-sequence-entry {
+      animation: article-sequence-entry .42s cubic-bezier(.22, 1, .36, 1)
+                 var(--article-entry-delay, 0ms) both !important;
+    }
+    @keyframes article-sequence-entry {
+      from { opacity: 0; transform: translate3d(0, 7px, 0); }
+      to { opacity: var(--left-text-opacity, 1); transform: translate3d(0, 0, 0); }
+    }
+    @media (max-width: 560px) {
+      .upper-bar-contents [class^="upbtn-icons-"] {
+        background-size: 20px 20px;
+        background-position: center;
+      }
+      html,
+      body {
+        min-height: 100%;
+        background: #070a12 !important;
+        background-image: linear-gradient(145deg, #0a101d 0%, #090b13 45%, #11101b 100%) !important;
+        background-attachment: scroll !important;
+        background-size: cover !important;
+      }
+      .whole,
+      .left,
+      .left-inner {
+        background: transparent !important;
+      }
+      .background,
+      .bg1 {
+        inset: -64px !important;
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+      }
+      #back {
+        top: 0;
+        bottom: auto;
+        width: 100vw !important;
+        height: 100svh !important;
+        min-height: 100svh;
+      }
+      .collections-grid {
+        justify-items: center;
+      }
+    }
+    .right .header .roat-btn {
+      position: absolute;
+      top: 178px;
+      right: 22px;
+    }
+    @media (max-width: 900px) {
+      .right .header .roat-btn {
+        top: 164px;
+        right: 22px;
+      }
+      .right .header .roat-btn:not(.is-entry-pending) {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+    }
+    .hero-intro,
+    .title-text,
+    .sprite-tip {
+      align-self: flex-start;
+      width: fit-content;
+      max-width: 100%;
+    }
+    .hero-meta {
+      display: inline-flex;
+      width: max-content;
+      max-width: 100%;
+    }
+    .hero-intro,
+    .title-text {
+      pointer-events: none;
+    }
+    .hero-intro > *,
+    .title-text p,
+    .sprite-tip {
+      pointer-events: auto;
+    }
+    .upper-bar.nav-ready {
+      transform: translate3d(0, 0, 0) scale(1) !important;
+    }
+    .upper-bar.nav-hidden {
+      transform: translate3d(0, -115%, 0) scale(.94) !important;
+    }
+    @media (max-width: 900px) {
+      .right {
+        -webkit-transform: translate3d(105%, 0, 0);
+        transform: translate3d(105%, 0, 0);
+        transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .3s ease, visibility 0s linear .5s !important;
+        will-change: transform, opacity;
+      }
+      .right.show-sidebar {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        transition-delay: 0s !important;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) and (max-width: 900px) {
+      .right {
+        transition-duration: .35s, .22s, 0s !important;
+      }
+    }
+    .msg-modal-overlay {
+      -webkit-transition: opacity .36s ease;
+      transition: opacity .36s ease;
+    }
+    .collections-modal-content,
+    .editorial-modal-content {
+      -webkit-transform: translate3d(0, 16px, 0);
+      transform: translate3d(0, 16px, 0);
+      -webkit-transition: transform .46s cubic-bezier(.22,1,.36,1), opacity .3s ease !important;
+      transition: transform .46s cubic-bezier(.22,1,.36,1), opacity .3s ease !important;
+      will-change: transform, opacity;
+    }
+    #collections-modal.active .collections-modal-content,
+    .msg-modal-overlay.active .editorial-modal-content {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .msg-modal-overlay { transition-duration: .22s !important; }
+      .collections-modal-content,
+      .editorial-modal-content { transition-duration: .28s, .2s !important; }
+      .left-text-motion {
+        opacity: var(--left-text-opacity, 0) !important;
+        transition: opacity .14s ease-out !important;
+      }
+      .hero-meta.left-text-motion:not(.left-text-settled),
+      .title-text.left-text-motion:not(.left-text-settled) {
+        animation: left-section-entry .48s cubic-bezier(.22,1,.36,1) var(--left-text-delay, 0ms) both !important;
+      }
+    }
+    @keyframes left-section-entry {
+      from { opacity: 0; transform: translate3d(0, 8px, 0); }
+      to { opacity: var(--left-text-opacity, 1); transform: translate3d(0, 0, 0); }
+    }
+    .hero-meta.left-text-motion:not(.left-text-settled),
+    .title-text.left-text-motion:not(.left-text-settled) {
+      animation: left-section-entry .62s cubic-bezier(.22,1,.36,1) var(--left-text-delay, 0ms) both;
+    }
+  </style>
+  <meta name="description" content="阿噜の个人站，记录创作、项目、收藏与日常灵感。">
+  <meta name="theme-color" content="#070a12">
+  <title>阿噜の个人站</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-32.png">
+  <link rel="icon" sizes="48x48" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-48.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-64.png">
+  <link rel="icon" sizes="96x96" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-96.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-128.png">
+  <link rel="icon" sizes="144x144" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-144.png">
+  <link rel="icon" sizes="192x192" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-192.png">
+  <link rel="icon" sizes="256x256" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-256.png">
+  <link rel="icon" sizes="384x384" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-384.png">
+  <link rel="icon" sizes="512x512" href="https://cdn.wranklehia.cn:6343/resources/icons/icon-512.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://cdn.wranklehia.cn:6343/resources/icons/apple-icon-120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://cdn.wranklehia.cn:6343/resources/icons/apple-icon-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="https://cdn.wranklehia.cn:6343/resources/icons/apple-icon-167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.wranklehia.cn:6343/resources/icons/apple-icon-180.png">
+  <link href="https://cdn.wranklehia.cn:6343/resources/icons/favicon.ico" rel="shortcut icon">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"
+          onerror="this.onerror=null;this.src='/resources/vendor/vanilla-tilt/vanilla-tilt.min.js';"></script>
+  <script src="https://cdn.wranklehia.cn:6343/resources/js/mmdparser.min.js"
+          onerror="this.onerror=null;this.src='/resources/js/mmdparser.min.js';"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/animation/CCDIKSolver.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/libs/ammo.wasm.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/loaders/MMDLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/animation/MMDPhysics.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/animation/MMDAnimationHelper.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/effects/OutlineEffect.js"></script>
+  <script type="module" src="https://cdn.wranklehia.cn:6343/resources/js/3davatar.js"></script>
+  <script src="https://cdn.wranklehia.cn:6343/resources/js/background.js" defer></script>
+  <script src="https://cdn.wranklehia.cn:6343/resources/js/buttons.js" defer></script>
+  <script src="https://cdn.wranklehia.cn:6343/resources/js/loading-screen.js"></script>
+  <script src="https://cdn.wranklehia.cn:6343/resources/js/clock.js" defer></script>
+  <script src="https://cdn.wranklehia.cn:6343/resources/js/rotating.js" defer></script>
+  <script src="https://cdn.wranklehia.cn:6343/resources/js/arusprite.js" defer></script>
+</head>
+<body>
+  <div class="progress-bar" id="progress-bar"></div>
+  <div class="whole">
+    <canvas id="back"></canvas>
+    <div class="bg1" id="bg1"></div>
+    <div class="left">
+      <div class="upper-bar" id="upper-bar">
+        <div class="upper-bar-tilt" id="upper-bar-tilt">
+          <div class="upper-bar-contents" id="upper-bar-contents">
+            <div class="upbtn-icons-house"></div>
+            <div class="button"><a href="" style="text-decoration: none"><p>主页</p></a></div>
+            <div class="upbtn-icons-hammer"></div>
+            <div class="button"><a href="/projects" style="text-decoration: none"><p>项目</p></a></div>
+            <div class="upbtn-icons-books"></div>
+            <div class="button"><a href="javascript:void(0)" id="open-collections-btn" style="text-decoration: none"><p>藏品</p></a></div>
+            <div class="upbtn-icons-messageboard"></div>
+            <div class="button"><a href="javascript:void(0)" id="open-msg-btn" style="text-decoration: none"><p>留言板</p></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="left-inner" id="left-inner-container">
+      <div class="hero-intro">
+        <span class="hero-kicker left-text-motion" style="--left-text-delay: 40ms;">WRANKLEHIA · DIGITAL GARDEN</span>
+        <p class="hero-copy left-text-motion entry-text-reveal" style="--left-text-delay: 110ms;">这里有我的收藏，以及偶尔值得留下的想法</p>
+        <div class="hero-meta left-text-motion" style="--left-text-delay: 180ms;"><span>TIANJIN · CHINA</span><span>EST. 2023</span></div>
+      </div>
+      <div class="title-text section-title left-text-motion" style="--left-text-delay: 260ms;">
+        <div class="alignline"></div>
+        <p style="font-size: 20px">最新记录 <small>JOURNAL</small></p>
+      </div>
+      <p class="sprite-tip left-text-motion entry-text-reveal" style="--left-text-delay: 330ms;">点击空白处让阿噜前往 · 点击阿噜会受伤</p>
+      </div>
+    <div class="right-inner"></div>
+  </div>
+  
+  <div class="right" id="profile-sidebar">
+    <div class="header">
+      <div class="aru-avatar" id="aru-avatar"></div>
+      <button class="roat-btn is-entry-pending" id="avatar-rotating-btn" type="button" aria-label="切换人物自动旋转" aria-pressed="false" title="切换人物自动旋转">
+        <div class="aimg" id="avatar-rotating-btn-arrow"></div>
+      </button>
+      <p class="profile-name">WrankleHia</p>
+      <p class="profile-role">（这里不知道写什么）</p>
+    </div>
+    <div id="clock"></div>
+    <p class="notice-title">站内公告</p>
+    <div class="fenge-line"></div>
+    
+    <div class ="notice-board" id="notice-board-container">
+      </div>
+
+    <div class="beian-information">
+      <span><a style="color: #ffffff75; text-decoration: none;font-size: 8px" href="https://beian.miit.gov.cn/" target="_blank"><img style="width:16px;height:16px;margin-bottom:-4px;margin-top:2px;" src="https://cdn.wranklehia.cn:6343/resources/icons/beian.png"> 津公网安备12011402001512 津ICP备2024010935号-1</a></span>
+      <a style="color: #ffffff75; text-decoration: none;font-size: 8px" href="https://icp.gov.moe/?keyword=20231035" target="_blank"><img style="width:15px;height:15px;margin-bottom:-5px" src="https://cdn.wranklehia.cn:6343/resources/icons/moe-icp.png">萌ICP备20231035号</a>
+    </div>
+  </div>
+  
+  <button class="totop-btn" id="totop-btn" type="button" aria-label="返回顶部">
+    <div class="aimg" id="totop-btn-arrow"></div>
+  </button>
+  <button class="toggle-sidebar-btn" id="toggle-sidebar-btn" type="button" aria-controls="profile-sidebar" aria-expanded="false" aria-label="展开侧栏">
+    <span class="toggle-handle-icon" aria-hidden="true"></span>
+  </button>
+
+  <div class="background"></div>
+  <div class="preview-sign">
+    <span>ARU'S ARCHIVE</span>
+    <span>© 2026</span>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.VanillaTilt === 'undefined') return;
+
+      VanillaTilt.init(document.querySelectorAll('.notice-board'), {
+        max: 6,
+        speed: 400,
+        glare: true,
+        'max-glare': 0.2
+      });
+
+      const upperBarTilt = document.getElementById('upper-bar-tilt');
+      if (upperBarTilt && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        VanillaTilt.init(upperBarTilt, {
+          max: 2,
+          speed: 500,
+          perspective: 1200,
+          scale: 1,
+          glare: true,
+          'max-glare': 0.2,
+          gyroscope: false
+        });
+      }
+    });
+  </script>
+  <script>
+    function clickEffect() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        window.addEventListener('pointerdown', event => {
+            if (event.button !== 0) return;
+            const ripple = document.createElement('span');
+            ripple.className = 'click-ripple';
+            ripple.style.left = `${event.clientX}px`;
+            ripple.style.top = `${event.clientY}px`;
+            document.body.appendChild(ripple);
+            ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+        }, { passive: true });
+    }
+    clickEffect();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('https://cdn.wranklehia.cn:6343/api/get-content')
+        .then(response => response.json())
+        .then(data => {
+          const c = data.colors;
+
+          const noticeContainer = document.getElementById('notice-board-container');
+          if (noticeContainer && data.notice.length > 0) {
+              let html = `<p style="color: ${c.noticeHighlight}">${data.notice[0]}</p>`;
+              for (let i = 1; i < data.notice.length; i++) {
+                  html += `<p style="color: ${c.noticeText}">${data.notice[i]}</p>`;
+              }
+              noticeContainer.insertAdjacentHTML('beforeend', html);
+          }
+
+          const articlesContainer = document.getElementById('left-inner-container');
+          if (articlesContainer) {
+              fetch('https://cdn.wranklehia.cn:6343/api/articles')
+                  .then(res => res.json())
+                  .then(articles => {
+                      const pinnedArticles = articles.filter(art => art.is_pinned === 1);
+                      const normalArticles = articles.filter(art => art.is_pinned !== 1);
+                      let html = '';
+
+                      if (pinnedArticles.length > 0) {
+                          html += `
+                            <div class="title-text" style="margin-top: 15px;">
+                                <div class="alignline" style="background-color: #ff9800;"></div>
+                                <p style="font-size: 20px; color: ${c.articleDate || '#fff'}">置顶文章</p>
+                            </div>`;
+                          pinnedArticles.forEach(art => {
+                              html += `<p class="article-link pinned-article" onclick="event.stopPropagation(); openArticle(${art.id})">${art.title}</p>`;
+                          });
+                      }
+
+                      const groupedArticles = {};
+                      normalArticles.forEach(art => {
+                          const dateStr = art.created_at.split(' ')[0].replace(/-/g, '/');
+                          if (!groupedArticles[dateStr]) groupedArticles[dateStr] = [];
+                          groupedArticles[dateStr].push(art);
+                      });
+
+                      for (const date in groupedArticles) {
+                          html += `
+                            <div class="title-text" style="margin-top: 15px;">
+                                <div class="alignline"></div>
+                                <p style="font-size: 20px; color: ${c.articleDate || '#fff'}">${date}</p>
+                            </div>`;
+                          groupedArticles[date].forEach(art => {
+                              html += `<p class="article-link" style="--article-color: ${c.articleText};" onclick="event.stopPropagation(); openArticle(${art.id})">${art.title}</p>`;
+                          });
+                      }
+                      articlesContainer.insertAdjacentHTML('beforeend', html);
+                  });
+          }
+        })
+        .catch(error => console.error('获取数据失败:', error));
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const leftContent = document.getElementById('left-inner-container');
+      if (!leftContent) return;
+
+      const selector = '.hero-intro > *, .left-inner > .title-text, .left-inner > .sprite-tip, .left-inner > .article-link';
+      const leftPanel = leftContent.parentElement
+        ? leftContent.parentElement.querySelector(':scope > .left')
+        : null;
+      let revealIndex = 0;
+      let articleRevealIndex = 0;
+      const observedText = new WeakSet();
+
+      const fadeObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const opacity = entry.isIntersecting
+            ? Math.min(1, Math.max(0, entry.intersectionRatio * 3.4))
+            : 0;
+          entry.target.style.setProperty('--left-text-opacity', opacity.toFixed(3));
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -4% 0px',
+        threshold: [0, .08, .16, .24, .32, .5, .75, 1]
+      });
+
+      const syncLeftPanelHeight = () => {
+        if (!leftPanel) return;
+        const requiredHeight = leftContent.offsetTop + leftContent.scrollHeight + 72;
+        const currentHeight = parseFloat(getComputedStyle(leftPanel).minHeight) || 0;
+        const nextHeight = Math.max(currentHeight, window.innerHeight, requiredHeight);
+        if (nextHeight > currentHeight + 1) leftPanel.style.minHeight = `${Math.ceil(nextHeight)}px`;
+      };
+
+      leftContent.querySelectorAll('.entry-text-reveal').forEach(element => {
+        element.addEventListener('animationend', () => element.classList.remove('entry-text-reveal'), { once: true });
+      });
+
+      const registerText = () => {
+        leftContent.querySelectorAll(selector).forEach(element => {
+          if (!element.classList.contains('left-text-motion')) {
+            element.classList.add('left-text-motion');
+            element.style.setProperty('--left-text-delay', `${Math.min(revealIndex, 7) * 70}ms`);
+            revealIndex += 1;
+
+            const isArticleEntry = element.classList.contains('article-link') ||
+              (element.classList.contains('title-text') && !element.classList.contains('section-title'));
+            if (isArticleEntry) {
+              element.style.setProperty('--article-entry-delay', `${articleRevealIndex * 65}ms`);
+              element.classList.add('article-sequence-entry');
+              element.addEventListener('animationend', () => {
+                if (element.classList.contains('title-text')) {
+                  element.classList.add('left-text-settled');
+                }
+                element.classList.remove('article-sequence-entry');
+              }, { once: true });
+              articleRevealIndex += 1;
+            }
+          }
+          if (!observedText.has(element)) {
+            observedText.add(element);
+            fadeObserver.observe(element);
+          }
+        });
+      };
+
+      registerText();
+      syncLeftPanelHeight();
+      requestAnimationFrame(() => {
+        syncLeftPanelHeight();
+        window.setTimeout(() => {
+          leftContent.querySelectorAll('.left-text-motion').forEach(element => element.classList.add('left-text-settled'));
+        }, 1100);
+      });
+
+      new MutationObserver(() => {
+        registerText();
+        syncLeftPanelHeight();
+      }).observe(leftContent, { childList: true, subtree: true });
+
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(syncLeftPanelHeight).observe(leftContent);
+      }
+
+      window.addEventListener('resize', () => {
+        syncLeftPanelHeight();
+      }, { passive: true });
+    });
+  </script>
+
+<div class="msg-modal-overlay" id="article-modal">
+    <div class="msg-modal-content editorial-modal-content article-modal-content">
+        <button class="msg-close-btn editorial-close" id="close-article-btn" type="button" aria-label="关闭文章">×</button>
+        <header class="modal-page-header article-header">
+            <span class="collections-kicker">ARU'S JOURNAL</span>
+            <h1 id="read-title">加载中...</h1>
+            <div id="read-date"></div>
+        </header>
+        <div class="article-scroll-area" id="article-scroll-area">
+            <div class="article-body" id="read-content"></div>
+        </div>
+    </div>
+</div>
+
+<div class="msg-modal-overlay" id="msg-modal">
+    <div class="msg-modal-content editorial-modal-content message-modal-content">
+        <button class="msg-close-btn editorial-close" id="close-msg-btn" type="button" aria-label="关闭留言板">×</button>
+        <header class="modal-page-header message-header">
+            <span class="collections-kicker">MESSAGE BOARD · BETA</span>
+            <h2>留言板</h2>
+            <p>留下一句话，或者一段偶然经过的心情。</p>
+        </header>
+        <div class="msg-list" id="msg-list-container"></div>
+        
+        <div class="msg-input-area" style="flex-direction: column; gap: 10px;">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="msg-name" placeholder="你的昵称" autocomplete="off" style="width: 120px;">
+                <input type="text" id="msg-content" class="content" placeholder="写下你的留言..." autocomplete="off" style="flex: 1;">
+            </div> <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="msg-captcha" placeholder="输入右侧验证码" style="width: 130px;" autocomplete="off">
+                <img id="msg-captcha-img" src="" 
+                     onclick="loadMessageCaptcha()" 
+                     style="height: 38px; border-radius: 8px; cursor: pointer; background: #222;" title="点击刷新">
+                <button class="msg-submit-btn" onclick="submitMessage()" style="height: 38px; padding: 0 25px; margin-left: auto; font-size: 15px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="msg-modal-overlay" id="collections-modal">
+    <div class="msg-modal-content collections-modal-content">
+        <button class="msg-close-btn editorial-close collections-close" id="close-collections-btn" type="button" aria-label="关闭藏品页面">×</button>
+        <header class="collections-header">
+            <div>
+                <span class="collections-kicker">ARU'S COLLECTION</span>
+                <h2>阿噜的藏品</h2>
+                <p>一些被时间留下的机器、设计与记忆。</p>
+            </div>
+            <span class="collections-count">06 OBJECTS</span>
+        </header>
+        <div class="msg-list collections-grid" id="collections-container">
+            <div class="collections-line">
+                <div class="collection-item" data-bg="https://cdn.wranklehia.cn:6343/resources/images/collections/testimage.webp" data-category="GAME PHONE" data-year="2011">
+                    <div class="content">
+                        <h2>Sony Xperia Play(2011)</h2>
+                        <p>滑盖掌机与 Android 手机交汇的短暂时代。</p>
+                    </div>
+                </div>
+                <div class="collection-item" data-bg="https://cdn.wranklehia.cn:6343/resources/images/collections/agfaprontorii.webp" data-category="CAMERA" data-year="1932">
+                    <div class="content"><h2>Agfa Prontor II(1932)</h2><p>机械快门、折叠机身，以及旧时代的光学手感。</p></div>
+                </div>
+                <div class="collection-item" data-bg="https://cdn.wranklehia.cn:6343/resources/images/collections/ibm5160.webp" data-category="COMPUTER" data-year="1983">
+                    <div class="content"><h2>IBM 5160(1983)</h2><p>个人计算机历史中朴素而坚固的一页。</p></div>
+                </div>
+            </div>
+            <div class="collections-line">
+                <div class="collection-item" data-bg="https://cdn.wranklehia.cn:6343/resources/images/collections/nokia3310.webp" data-category="MOBILE" data-year="2000">
+                    <div class="content"><h2>Nokia 3310(2000)</h2><p>耐用、直接，一部成为集体记忆的手机。</p></div>
+                </div>
+                <div class="collection-item" data-bg="https://cdn.wranklehia.cn:6343/resources/images/collections/testimage.webp" data-category="MOBILE" data-year="2007">
+                    <div class="content"><h2>Nokia N95(2007)</h2><p>智能手机定型之前，大胆而完整的旗舰想象。</p></div>
+                </div>
+                <div class="collection-item" data-bg="https://cdn.wranklehia.cn:6343/resources/images/collections/testimage.webp" data-category="MOBILE" data-year="2007">
+                    <div class="content"><h2>Nokia 1200(2007)</h2><p>为日常通信而生的简单、可靠与克制。</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function fetchImageWithProgress(url, onProgress) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('网络请求异常');
+            
+            const contentLength = response.headers.get('content-length');
+            if (!contentLength) {
+                const blob = await response.blob();
+                onProgress(100);
+                return URL.createObjectURL(blob);
+            }
+            
+            const total = parseInt(contentLength, 10);
+            let loaded = 0;
+            const reader = response.body.getReader();
+            const chunks = [];
+            
+            while(true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                loaded += value.length;
+                onProgress(Math.floor((loaded / total) * 100));
+            }
+            
+            return URL.createObjectURL(new Blob(chunks));
+        } catch (error) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => { onProgress(100); resolve(url); };
+                img.onerror = reject;
+                img.src = url;
+            });
+        }
+    }
+
+    function toggleBodyScroll(disable) {
+        if (disable) {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            if (document.getElementById('canvas2')) document.getElementById('canvas2').style.pointerEvents = 'none';
+            if (document.getElementById('back')) document.getElementById('back').style.pointerEvents = 'none';
+            document.body.style.cursor = 'default';
+        } else {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            if (document.getElementById('canvas2')) document.getElementById('canvas2').style.pointerEvents = 'auto';
+            if (document.getElementById('back')) document.getElementById('back').style.pointerEvents = 'auto';
+            document.body.style.cursor = '';
+        }
+    }
+
+    function closeModalWithTransition(modal) {
+        if (!modal || modal.classList.contains('is-closing')) return;
+        modal.classList.add('is-closing');
+        modal.classList.remove('active');
+        window.setTimeout(() => {
+            modal.classList.remove('is-closing');
+            toggleBodyScroll(false);
+        }, 380);
+    }
+
+    function formatDate(dateString) {
+        let safeString = dateString;
+        if (typeof safeString === 'string' && !safeString.includes('Z')) safeString = safeString.replace(' ', 'T') + 'Z';
+        const d = new Date(safeString);
+        if (isNaN(d.getTime())) return "未知时间";
+        const utc8Date = new Date(d.getTime() + (8 * 3600000));
+        const pad = (n) => n < 10 ? '0' + n : n;
+        return `${utc8Date.getUTCFullYear()}/${pad(utc8Date.getUTCMonth() + 1)}/${pad(utc8Date.getUTCDate())} ${pad(utc8Date.getUTCHours())}:${pad(utc8Date.getUTCMinutes())}:${pad(utc8Date.getUTCSeconds())}`;
+    }
+
+    const articleModal = document.getElementById('article-modal');
+    document.getElementById('close-article-btn').addEventListener('click', () => {
+        closeModalWithTransition(articleModal);
+    });
+
+    function openArticle(id) {
+        articleModal.classList.add('active');
+        toggleBodyScroll(true);
+        
+        document.getElementById('read-title').innerText = "加载中...";
+        document.getElementById('read-content').innerHTML = "";
+        document.getElementById('read-date').innerText = "";
+
+        fetch(`https://cdn.wranklehia.cn:6343/api/articles/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('read-title').innerText = data.title;
+                document.getElementById('read-date').innerText = "发布时间：" + formatDate(data.created_at);
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.content, 'text/html');
+                const imagesToProcess = Array.from(doc.body.getElementsByTagName('img'));
+                
+                imagesToProcess.forEach(img => {
+                    const originalSrc = img.getAttribute('src');
+                    img.removeAttribute('src'); 
+                    img.setAttribute('data-original-src', originalSrc); 
+                });
+                
+                document.getElementById('read-content').innerHTML = doc.body.innerHTML;
+                
+                const domImages = Array.from(document.getElementById('read-content').getElementsByTagName('img'));
+                
+                domImages.forEach(img => {
+                    const originalSrc = img.getAttribute('data-original-src');
+                    if(!originalSrc) return;
+
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '100%';
+                    img.style.objectFit = 'contain';
+                    img.style.display = 'block';
+                    img.style.borderRadius = '8px';
+                    img.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'article-image-frame';
+
+                    const loaderUI = document.createElement('div');
+                    loaderUI.className = 'article-inline-loader';
+                    loaderUI.innerHTML = '<span class="image-load-label">LOADING IMAGE</span><div class="image-load-track"><i></i></div>';
+                    img.parentNode.insertBefore(wrapper, img);
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(loaderUI);
+
+                    fetchImageWithProgress(originalSrc, (percent) => {
+                        loaderUI.style.setProperty('--load-progress', percent / 100);
+                    }).then(async objectUrl => {
+                        const decodedImage = new Image();
+                        decodedImage.decoding = 'async';
+                        decodedImage.src = objectUrl;
+                        if (decodedImage.decode) await decodedImage.decode();
+                        wrapper.style.setProperty('--image-ratio', `${decodedImage.naturalWidth} / ${decodedImage.naturalHeight}`);
+                        wrapper.style.setProperty('--image-natural-width', `${decodedImage.naturalWidth}px`);
+                        img.src = objectUrl;
+                        img.width = decodedImage.naturalWidth;
+                        img.height = decodedImage.naturalHeight;
+                        requestAnimationFrame(() => {
+                            wrapper.classList.add('is-frame-ready');
+                            img.classList.add('is-image-ready');
+                            loaderUI.classList.add('is-loader-hidden');
+                        });
+                        setTimeout(() => loaderUI.remove(), 420);
+                    }).catch(err => {
+                        loaderUI.innerHTML = '<span style="color: rgba(255,255,255,0.5); font-size: 12px;">图片加载失败</span>';
+                    });
+                });
+                
+                const scrollArea = document.getElementById('article-scroll-area');
+                if(scrollArea) scrollArea.scrollTop = 0;
+            })
+            .catch(err => {
+                document.getElementById('read-title').innerText = "加载失败";
+                document.getElementById('read-content').innerText = "文章获取失败，请检查网络连接。";
+            });
+    }
+
+const colModal = document.getElementById('collections-modal');
+    const collectionItems = Array.from(document.querySelectorAll('.collection-item'));
+    let collectionsLoadPromise;
+    let collectionTiltReady = false;
+
+    async function prepareCollectionItem(item) {
+        if (item.querySelector('.collection-cover')) return;
+        const bgUrl = item.getAttribute('data-bg');
+        if (!bgUrl) return;
+
+        const loaderUI = document.createElement('div');
+        loaderUI.className = 'custom-loader-overlay collection-loader-overlay';
+        loaderUI.innerHTML = '<span class="image-load-label">LOADING OBJECT</span><div class="image-load-track"><i></i></div>';
+        item.appendChild(loaderUI);
+
+        try {
+            const objectUrl = await fetchImageWithProgress(bgUrl, (percent) => {
+                loaderUI.style.setProperty('--load-progress', percent / 100);
+            });
+            const cover = new Image();
+            cover.className = 'collection-cover';
+            cover.alt = '';
+            cover.decoding = 'async';
+            cover.src = objectUrl;
+            if (cover.decode) await cover.decode();
+            cover.classList.add('is-image-ready');
+            item.prepend(cover);
+            loaderUI.remove();
+        } catch (error) {
+            console.error('图片加载失败:', error);
+            loaderUI.innerHTML = '<span class="image-load-label">IMAGE UNAVAILABLE</span>';
+        }
+    }
+
+    function prepareCollections() {
+        if (!collectionsLoadPromise) {
+            collectionsLoadPromise = Promise.all(collectionItems.map(prepareCollectionItem)).then(() => {
+                if (!collectionTiltReady && typeof VanillaTilt !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                    VanillaTilt.init(collectionItems, { max: 5, speed: 700, glare: true, 'max-glare': 0.15 });
+                    collectionTiltReady = true;
+                }
+            });
+        }
+        return collectionsLoadPromise;
+    }
+
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(prepareCollections, { timeout: 900 });
+    } else {
+        setTimeout(prepareCollections, 250);
+    }
+
+    document.getElementById('open-collections-btn').addEventListener('click', () => {
+        colModal.classList.add('active');
+        toggleBodyScroll(true);
+        prepareCollections();
+    });
+
+    document.getElementById('close-collections-btn').addEventListener('click', () => {
+        closeModalWithTransition(colModal);
+    });
+
+    colModal.addEventListener('click', (event) => {
+        if (event.target === colModal) {
+            closeModalWithTransition(colModal);
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && colModal.classList.contains('active')) {
+            closeModalWithTransition(colModal);
+        }
+    });
+
+    const msgModal = document.getElementById('msg-modal');
+
+    document.getElementById('open-msg-btn').addEventListener('click', () => {
+        msgModal.classList.add('active');
+        toggleBodyScroll(true);
+        fetchMessages();
+        document.getElementById('msg-captcha').value = '';
+        loadMessageCaptcha();
+    });
+    
+    document.getElementById('close-msg-btn').addEventListener('click', () => {
+        closeModalWithTransition(msgModal);
+    });
+
+    [articleModal, msgModal].forEach(modal => {
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModalWithTransition(modal);
+            }
+        });
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        const activeModal = document.querySelector('#article-modal.active, #msg-modal.active');
+        if (activeModal) {
+            closeModalWithTransition(activeModal);
+        }
+    });
+
+    function fetchMessages() {
+        fetch('https://cdn.wranklehia.cn:6343/api/messages')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('msg-list-container');
+                const html = data.length === 0 ? '<p style="text-align:center;color:#ffffff75;">目前还没有人留言哦~</p>' : data.map(msg => `
+                    <div class="msg-item">
+                        <strong>${msg.name}</strong> <span>${formatDate(msg.created_at)}</span>
+                        <p style="margin: 5px 0 0 0; color: rgba(255,255,255,0.9);">${msg.content}</p>
+                    </div>
+                `).join('');
+                container.innerHTML = html;
+            });
+    }
+
+let messageCaptchaId = '';
+let messageCaptchaRequest = 0;
+let messageCaptchaReady = false;
+let messageCaptchaObjectUrl = '';
+
+async function loadMessageCaptcha() {
+    const image = document.getElementById('msg-captcha-img');
+    const requestId = ++messageCaptchaRequest;
+    messageCaptchaId = '';
+    messageCaptchaReady = false;
+    image.alt = '验证码加载中';
+    try {
+        const response = await fetch('https://cdn.wranklehia.cn:6343/api/captcha?purpose=message', {
+            cache: 'no-store',
+            credentials: 'include'
+        });
+        if (!response.ok) throw new Error('验证码加载失败');
+        if (requestId !== messageCaptchaRequest) return;
+
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+            const data = await response.json();
+            if (data.server !== 'wranklehia_server' || !data.captchaId || !data.image) {
+                throw new Error('验证码响应无效');
+            }
+            messageCaptchaId = data.captchaId;
+            image.src = data.image;
+        } else if (contentType.includes('image/svg+xml')) {
+            const blob = await response.blob();
+            if (requestId !== messageCaptchaRequest) return;
+            if (messageCaptchaObjectUrl) URL.revokeObjectURL(messageCaptchaObjectUrl);
+            messageCaptchaObjectUrl = URL.createObjectURL(blob);
+            image.src = messageCaptchaObjectUrl;
+        } else {
+            throw new Error('验证码响应格式无效');
+        }
+        messageCaptchaReady = true;
+        image.alt = '验证码，点击刷新';
+    } catch (error) {
+        console.error(error);
+        if (requestId !== messageCaptchaRequest) return;
+        image.removeAttribute('src');
+        image.alt = '验证码加载失败，点击重试';
+    }
+}
+
+async function submitMessage() {
+    const name = document.getElementById('msg-name').value.trim();
+    const content = document.getElementById('msg-content').value.trim();
+    const captchaInput = document.getElementById('msg-captcha');
+    const captchaCode = captchaInput.value.trim();
+    
+    if(!name || !content || !captchaCode || !messageCaptchaReady) return alert("昵称、内容和验证码均不能为空！");
+
+    try {
+        const response = await fetch('https://cdn.wranklehia.cn:6343/api/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ name, content, captchaCode, captchaId: messageCaptchaId })
+        });
+        const data = await response.json();
+        if (!response.ok || data.error) {
+            alert("❌ " + (data.error || "留言提交失败"));
+        } else {
+            alert("✅ " + data.message); 
+            document.getElementById('msg-content').value = ''; 
+            fetchMessages();
+        }
+    } catch (error) {
+        console.error(error);
+        alert("请求失败，请稍后重试");
+    } finally {
+        captchaInput.value = '';
+        await loadMessageCaptcha();
+    }
+}
+
+    document.querySelectorAll('.msg-modal-overlay').forEach(overlay => {
+        ['mousedown', 'mouseup', 'click', 'pointerdown', 'touchstart', 'mousemove', 'mouseover', 'mouseout', 'pointermove'].forEach(evt => {
+            overlay.addEventListener(evt, e => e.stopPropagation());
+        });
+    });
+
+    window.addEventListener('keydown', function(e) {
+        const articleModal = document.getElementById('article-modal');
+        if (articleModal && articleModal.classList.contains('active')) {
+            const scrollKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '];
+            if (scrollKeys.includes(e.key)) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                const scrollArea = document.getElementById('article-scroll-area');
+                if (scrollArea) {
+                    const scrollAmount = 60;
+                    if (e.key === 'ArrowDown' || e.key === ' ') scrollArea.scrollTop += scrollAmount;
+                    if (e.key === 'ArrowUp') scrollArea.scrollTop -= scrollAmount;
+                }
+            }
+        }
+    }, true); 
+</script>
+</body>
+</html>
